@@ -4,6 +4,9 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
+const { registerRouter } = require("./routes/register");
+const { loginRouter } = require("./routes/login");
+
 dotenv.config();
 const app = express();
 
@@ -21,6 +24,9 @@ connection.on("error", console.error.bind(console, "connection error"));
 connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
+
+app.use(registerRouter);
+app.use(loginRouter);
 
 app.use("/", (req, res) => {
   res.send("Welcome to the authentication system");

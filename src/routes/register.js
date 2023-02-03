@@ -1,16 +1,19 @@
 const express = require("express");
-const router = express.router();
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const User = require("../../models/User");
+const User = require("../models/User");
+
+const router = express.Router();
+
+const registerRouter = router;
 
 // @route   POST api/auth/register
 // @desc    Register a user
 // @access  Public
-router.post(
-  "api/register",
+registerRouter.post(
+  "api/auth/register",
   [
     check("name", "Name is required").not().isEmpty(),
     check("email", "Please include a valid email").isEmail(),
@@ -62,16 +65,4 @@ router.post(
   }
 );
 
-// @route   POST api/auth/login
-// @desc    Login user / Returning JWT
-// @access  Public
-router.post(
-  "/login",
-  [
-    check("email", "Please include a valid email").isEmail(),
-    check("password", "Password is required").exists(),
-  ]
-  // authController.loginUser
-);
-
-module.exports = router;
+module.exports = registerRouter;
